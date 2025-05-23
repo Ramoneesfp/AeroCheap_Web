@@ -43,6 +43,6 @@ def receive_data():
     return render_template("index.html", headings=headings, data=myresult, plot_date_arr=plot_date_arr, plot_min_prince=plot_min_prince)
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '192.168.0.219')
+    #app.run(debug=True, host= '192.168.0.219')
     app.run(debug=True)
 
