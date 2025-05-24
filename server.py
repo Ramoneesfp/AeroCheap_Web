@@ -46,7 +46,7 @@ if __name__ == "__main__":
     #app.run(debug=True, host= '192.168.0.219')
     app.run(debug=True)
 
-    #INSERT VALUE INTO MONGODB
+    #INSERT VALUE INTO MONGODB s
 
     # from pymongo import MongoClient
     # client = MongoClient("mongodb://localhost:27017")
