@@ -1,6 +1,7 @@
 from flask import Flask, render_template,request
 from pymongo import MongoClient
 from bson import ObjectId
+from datetime import datetime
 
 client = MongoClient("mongodb://localhost:27017")
 collection_link = client["budget"]["link_budget"]
@@ -29,6 +30,18 @@ def receive_data():
     fone = request.form["demo-fone"]
     email = request.form["demo-email"]
     print(f'name:{name}/{surname} - {cpf} - {fone} and email:{email}')
+
+    aggregate_id = {
+        "name": name,
+        "surname": surname,
+        "cpf": cpf,
+        "phone_number": fone,
+        "email": email,
+        "date_request": datetime.now(),
+        "obs": "TESTE_WEB"
+    }
+    result = collection_id.insert_one(aggregate_id)
+    print(f"Inserted document ID: {result.inserted_id}")
     return render_template("index.html", headings=headings, data=myresult)
 
 if __name__ == "__main__":
