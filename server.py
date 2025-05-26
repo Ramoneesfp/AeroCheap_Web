@@ -24,8 +24,11 @@ def home():
 @app.route("/form-entry", methods=["POST"])
 def receive_data():
     name = request.form["demo-name"]
+    surname = request.form["demo-surname"]
+    cpf = request.form["demo-cpf"]
+    fone = request.form["demo-fone"]
     email = request.form["demo-email"]
-    print(f'name:{name} and email:{email}')
+    print(f'name:{name}/{surname} - {cpf} - {fone} and email:{email}')
     return render_template("index.html", headings=headings, data=myresult)
 
 if __name__ == "__main__":
