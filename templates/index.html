@@ -46,35 +46,53 @@
 								<div class="fields">
 									<div class="field third">
 										<label for="demo-name">Name</label>
-										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane">
+										<input type="text" name="demo-name" id="demo-name" value="Jane" placeholder="Jane">
 									</div>
 									<div class="field third">
 										<label for="demo-surname">Surname</label>
-										<input type="text" name="demo-surname" id="demo-surname" value="" placeholder="Doe">
+										<input type="text" name="demo-surname" id="demo-surname" value="Doe" placeholder="Doe">
 									</div>
 									<div class="field third">
 										<label for="demo-cpf">CPF</label>
-										<input type="number" name="demo-cpf" id="demo-cpf" value="" placeholder="000.000.000-00">
+										<input type="number" name="demo-cpf" id="demo-cpf" value="00" placeholder="000.000.000-00">
 									</div>
 									<div class="field third">
 										<label for="demo-fone">Telefone</label>
-										<input type="number" name="demo-fone" id="demo-fone" value="" placeholder="(00)00000-0000">
+										<input type="number" name="demo-fone" id="demo-fone" value="00" placeholder="(00)00000-0000">
 									</div>
 									<div class="field third">
 										<label for="demo-email">Email</label>
-										<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld">
+										<input type="email" name="demo-email" id="demo-email" value="jane@untitled.tld" placeholder="jane@untitled.tld">
 									</div>
 									<div class="field quarter">
-										<label for="demo-category">Category</label>
+										<label for="demo-cod_dep">Departure</label>
+										<input type="text" name="demo-cod_dep" id="demo-cod_dep" value="CWB" placeholder="CWB">
+									</div>
+									<div class="field quarter">
+										<label for="demo-cod_arr">Arrival</label>
+										<input type="text" name="demo-cod_arr" id="demo-cod_arr" value="GRU" placeholder="GRU">
+									</div>
+									<div class="field quarter">
+										<label for="demo-ticket_type">Tipo</label>
 										<div class="select-wrapper">
-											<select name="demo-category" id="demo-category">
-												<option value="">-</option>
-												<option value="1">Manufacturing</option>
-												<option value="1">Shipping</option>
-												<option value="1">Administration</option>
-												<option value="1">Human Resources</option>
+											<select name="demo-ticket_type" id="demo-ticket_type">
+												<option value="-">-</option>
+												<option value="1">Com retorno</option>
+												<option value="2">Só ida ou Só volta</option>
 											</select>
 										</div>
+									</div>
+									<div class="field quarter">
+										<label for="demo-adults">Adultos</label>
+										<input type="number" name="demo-adults" id="demo-adults" value="1" placeholder="0">
+									</div>
+									<div class="field quarter">
+										<label for="demo-date_dep">Data Partida</label>
+										<input type="text" name="demo-date_dep" id="demo-date_dep" value="2025/08/08" placeholder="0000/00/00">
+									</div>
+									<div class="field quarter">
+										<label for="demo-date_ret">Data Retorno</label>
+										<input type="text" name="demo-date_ret" id="demo-date_ret" value="2025/09/08" placeholder="0000/00/00">
 									</div>
 									<div class="field quarter">
 										<input type="radio" id="demo-priority-low" name="demo-priority" class="color2" checked="">
@@ -104,20 +122,6 @@
 							</form>
 						</div>
 
-						<table>
-							<tr>
-								{%for header in headings %}
-								<th>{{ header }}</th>
-								{% endfor %}
-							</tr>
-							{%for row in data %}
-							<tr>
-								{%for cell in row %}
-								<td>{{ cell }}</td>
-								{% endfor %}
-							{% endfor %}
-							</tr>
-						</table>
 					</header>
 
 				<!-- Main -->
