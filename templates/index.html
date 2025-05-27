@@ -65,20 +65,28 @@
 										<input type="email" name="demo-email" id="demo-email" value="jane@untitled.tld" placeholder="jane@untitled.tld">
 									</div>
 									<div class="field quarter">
-										<label for="demo-cod_dep">Departure</label>
-										<input type="text" name="demo-cod_dep" id="demo-cod_dep" value="CWB" placeholder="CWB">
+										<label for="demo-cod_dep">Origem</label>
+										<input type="text" role="combobox" name="demo-cod_dep" id="demo-cod_dep" value="CWB" placeholder="CWB">
+										<datalist id="datalist-airport">
+											<select name="demo-cod_dep">
+												<option>Affenpinscher</option>
+												<option>Afghan Hound</option>
+												<option>Aidi</option>
+												...
+											</select>
+										</datalist>
 									</div>
 									<div class="field quarter">
-										<label for="demo-cod_arr">Arrival</label>
+										<label for="demo-cod_arr">Destino</label>
 										<input type="text" name="demo-cod_arr" id="demo-cod_arr" value="GRU" placeholder="GRU">
 									</div>
 									<div class="field quarter">
 										<label for="demo-ticket_type">Tipo</label>
 										<div class="select-wrapper">
-											<select name="demo-ticket_type" id="demo-ticket_type">
-												<option value="-">-</option>
-												<option value="1">Com retorno</option>
-												<option value="2">Só ida ou Só volta</option>
+											<select role="listbox" name="demo-ticket_type" id="demo-ticket_type" aria-multiselectable="true">
+												{%for header in headings %}
+												<option value={{ header }}>{{ header }}</option>
+												{% endfor %}
 											</select>
 										</div>
 									</div>
@@ -88,11 +96,11 @@
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_dep">Data Partida</label>
-										<input type="text" name="demo-date_dep" id="demo-date_dep" value="2025/08/08" placeholder="0000/00/00">
+										<input type="date" name="demo-date_dep" id="demo-date_dep" value="2025/08/08" placeholder="0000/00/00">
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_ret">Data Retorno</label>
-										<input type="text" name="demo-date_ret" id="demo-date_ret" value="2025/09/08" placeholder="0000/00/00">
+										<input type="date" name="demo-date_ret" id="demo-date_ret" value="2025/09/08" placeholder="0000/00/00">
 									</div>
 									<div class="field quarter">
 										<input type="radio" id="demo-priority-low" name="demo-priority" class="color2" checked="">
