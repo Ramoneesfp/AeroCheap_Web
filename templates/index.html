@@ -54,15 +54,22 @@
 									</div>
 									<div class="field third">
 										<label for="demo-cpf">CPF</label>
-										<input type="number" name="demo-cpf" id="demo-cpf" value="00" placeholder="000.000.000-00">
+										<input type="number" name="demo-cpf" id="demo-cpf" value="" placeholder="000.000.000-00">
 									</div>
 									<div class="field third">
 										<label for="demo-fone">Telefone</label>
-										<input type="number" name="demo-fone" id="demo-fone" value="00" placeholder="(00)00000-0000">
+										<input type="number" name="demo-fone" id="demo-fone" value="" placeholder="(00)00000-0000">
 									</div>
 									<div class="field third">
 										<label for="demo-email">Email</label>
-										<input type="email" name="demo-email" id="demo-email" value="jane@untitled.tld" placeholder="jane@untitled.tld">
+										<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld">
+									</div>
+									<div class="field third">
+										<label for="demo-com">Meio de Comunicação</label>
+										<input type="radio" id="demo-com_whats" name="demo-com" class="color2" checked="">
+										<label for="demo-com_whats">WhatsApp</label>
+										<input type="radio" id="demo-com_email" name="demo-com" class="color2">
+										<label for="demo-com_email">Email</label>
 									</div>
 									<div class="field quarter">
 										<label for="demo-cod_dep">Origem</label>
@@ -75,7 +82,7 @@
 										</datalist>
 									</div>
 									<div class="field quarter">
-										<label for="demo-cod_arr">Origem</label>
+										<label for="demo-cod_arr">Destino</label>
 										<input name="demo-cod_arr" id="demo-cod_arr" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
 										aria-haspopup="false" aria-expanded="true">
 										<datalist id="mylist">
@@ -95,10 +102,6 @@
 										</div>
 									</div>
 									<div class="field quarter">
-										<label for="demo-adults">Adultos</label>
-										<input type="number" name="demo-adults" id="demo-adults" value="1" placeholder="0">
-									</div>
-									<div class="field quarter">
 										<label for="demo-date_dep">Data Partida</label>
 										<input type="date" name="demo-date_dep" id="demo-date_dep" value=""
 											   min={{ today }} max={{ lastday }} placeholder="0000/00/00">
@@ -114,14 +117,9 @@
 										<input type="date" name="demo-date_ret" id="demo-date_ret" value=""
 											   min="" max={{ lastday }} placeholder="0000/00/00" onclick="log_console()">
 									</div>
-
 									<div class="field quarter">
-										<input type="radio" id="demo-priority-low" name="demo-priority" class="color2" checked="">
-										<label for="demo-priority-low">Low Priority</label>
-									</div>
-									<div class="field quarter">
-										<input type="radio" id="demo-priority-high" name="demo-priority" class="color2">
-										<label for="demo-priority-high">High Priority</label>
+										<label for="demo-adults">Adultos</label>
+										<input type="number" name="demo-adults" id="demo-adults" value="1" placeholder="0">
 									</div>
 									<div class="field quarter">
 										<input type="checkbox" id="demo-copy" name="demo-copy" class="color2">

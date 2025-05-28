@@ -410,6 +410,7 @@ input, select, textarea {
 		padding: 0 1rem;
 		text-decoration: none;
 		width: 100%;
+		text-align: center;
 	}
 
 		input[type="text"]:invalid,
