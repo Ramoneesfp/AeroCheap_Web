@@ -66,7 +66,7 @@
 									</div>
 									<div class="field quarter">
 										<label for="demo-cod_dep">Origem</label>
-										<input type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
+										<input name="demo-cod_dep" id="demo-cod_dep" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
 										aria-haspopup="false" aria-expanded="true">
 										<datalist id="mylist">
 											{% for i in range(airports['location']|length) %}
@@ -75,8 +75,14 @@
 										</datalist>
 									</div>
 									<div class="field quarter">
-										<label for="demo-cod_arr">Destino</label>
-										<input type="text" name="demo-cod_arr" id="demo-cod_arr" value="GRU" placeholder="GRU">
+										<label for="demo-cod_arr">Origem</label>
+										<input name="demo-cod_arr" id="demo-cod_arr" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
+										aria-haspopup="false" aria-expanded="true">
+										<datalist id="mylist">
+											{% for i in range(airports['location']|length) %}
+											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
+											{% endfor %}
+										</datalist>
 									</div>
 									<div class="field quarter">
 										<label for="demo-ticket_type">Tipo</label>
@@ -94,12 +100,21 @@
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_dep">Data Partida</label>
-										<input type="date" name="demo-date_dep" id="demo-date_dep" value="2025/08/08" placeholder="0000/00/00">
+										<input type="date" name="demo-date_dep" id="demo-date_dep" value=""
+											   min={{ today }} max={{ lastday }} placeholder="0000/00/00">
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_ret">Data Retorno</label>
-										<input type="date" name="demo-date_ret" id="demo-date_ret" value="2025/09/08" placeholder="0000/00/00">
+										 <script>
+											function log_console() {
+												document.getElementById('demo-date_ret').min = document.getElementById('demo-date_dep').value;
+												console.log(document.getElementById('demo-date_dep').value);
+											}
+										</script>
+										<input type="date" name="demo-date_ret" id="demo-date_ret" value=""
+											   min="" max={{ lastday }} placeholder="0000/00/00" onclick="log_console()">
 									</div>
+
 									<div class="field quarter">
 										<input type="radio" id="demo-priority-low" name="demo-priority" class="color2" checked="">
 										<label for="demo-priority-low">Low Priority</label>

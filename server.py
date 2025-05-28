@@ -37,17 +37,19 @@ for i in col_id:
 location = location.split(";")
 airport = airport.split(";")
 iata_code = iata_code.split(";")
-print(f'{len(location)} - {location}')
-print(f'{len(airport)} - {airport}')
-print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
-print(f'{location[1002]} / {airport[1002]} / {iata_code[1002]}')
-# print(f'{location[index]} - {airport[index]} - {iata_code[index]}')
-# print(f'{location[index+1]} - {airport[index+1]} - {iata_code[index+1]}')
+# print(f'{len(location)} - {location}')
+# print(f'{len(airport)} - {airport}')
+# print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
 airport_search = {
     "location": location,
     "airport": airport,
     "iata_code": iata_code
 }
+
+today = datetime.today()
+lastday = today.replace(year=today.year + 1)
+today = today.strftime("%Y-%m-%d")
+lastday = lastday.strftime("%Y-%m-%d")
 
 def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret):
     client = MongoClient("mongodb://localhost:27017")
@@ -93,7 +95,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html", headings=headings, airports=airport_search)
+    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday)
 
 # SOLUTION to Challenge:
 @app.route("/form-entry", methods=["POST"])
@@ -117,10 +119,10 @@ def receive_data():
 
     #informar pagina que inseriu
 
-    return render_template("index.html", headings=headings, airports=airport_search)
+    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday)
 
 if __name__ == "__main__":
-    #app.run(debug=True, host= '172.20.63.108')
-    app.run(debug=True)
+    app.run(debug=True, host= '192.168.0.105')
+    #app.run(debug=True)
 
 
