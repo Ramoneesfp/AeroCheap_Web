@@ -1,17 +1,53 @@
+# from fastapi import FastAPI
 from flask import Flask, render_template,request
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
 
-#collection_link = client["budget"]["link_budget"]
-#col_id = collection_id.find({})
-#col_id = list(col_id)
-#print(col_id)
+#91189e08c8723fede58866e0f6108ffe8ea26a8508d86b1c9b4a2fcbb3bd25a8e5d6218b790081ffde0d2fd2cc2286a4 # API
 
-#myresult = col_id
+# app = FastAPI()
+#
+# @app.get("/")
+# async def root():
+#     return {"message": "Hello World"}
+#
+# app.get("/hello/{name}")
+# async def say_hello:
+#     return {"message": f"Hello {name}"}
 
 #headings = ["Id", "cpf", "phone_number", "name", "surname", "email", "date_request", "obs"]
+airports = ["CWB", "GRU", "MAD"]
 headings = ["", "Com retorno", "Só ida"]
+
+client = MongoClient("mongodb://localhost:27017")
+collection_id = client["budget"]["airports"]
+col_id = collection_id.find({})
+#col_id = list(col_id)
+location = ""
+airport = ""
+iata_code = ""
+for i in col_id:
+    aux = i["location"]
+    location += aux
+    aux = i["airport"]
+    airport += aux
+    aux = i["iata_code"]
+    iata_code += aux
+location = location.split(";")
+airport = airport.split(";")
+iata_code = iata_code.split(";")
+print(f'{len(location)} - {location}')
+print(f'{len(airport)} - {airport}')
+print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
+print(f'{location[1002]} / {airport[1002]} / {iata_code[1002]}')
+# print(f'{location[index]} - {airport[index]} - {iata_code[index]}')
+# print(f'{location[index+1]} - {airport[index+1]} - {iata_code[index+1]}')
+airport_search = {
+    "location": location,
+    "airport": airport,
+    "iata_code": iata_code
+}
 
 def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret):
     client = MongoClient("mongodb://localhost:27017")
@@ -57,7 +93,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html", headings=headings)
+    return render_template("index.html", headings=headings, airports=airport_search)
 
 # SOLUTION to Challenge:
 @app.route("/form-entry", methods=["POST"])
@@ -81,10 +117,10 @@ def receive_data():
 
     #informar pagina que inseriu
 
-    return render_template("index.html", headings=headings)
+    return render_template("index.html", headings=headings, airports=airport_search)
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '172.20.63.108')
-    #app.run(debug=True)
+    #app.run(debug=True, host= '172.20.63.108')
+    app.run(debug=True)
 
 

@@ -66,14 +66,12 @@
 									</div>
 									<div class="field quarter">
 										<label for="demo-cod_dep">Origem</label>
-										<input type="text" role="combobox" name="demo-cod_dep" id="demo-cod_dep" value="CWB" placeholder="CWB">
-										<datalist id="datalist-airport">
-											<select name="demo-cod_dep">
-												<option>Affenpinscher</option>
-												<option>Afghan Hound</option>
-												<option>Aidi</option>
-												...
-											</select>
+										<input type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
+										aria-haspopup="false" aria-expanded="true">
+										<datalist id="mylist">
+											{% for i in range(airports['location']|length) %}
+											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
+											{% endfor %}
 										</datalist>
 									</div>
 									<div class="field quarter">
