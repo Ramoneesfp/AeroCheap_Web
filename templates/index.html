@@ -104,19 +104,33 @@
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_dep">Data Partida</label>
+										<script>
+											function change_date_dep() {
+												document.getElementById('demo-date_ret').disabled = false;
+												document.getElementById('demo-date_ret').value = "";
+											}
+										</script>
 										<input type="date" name="demo-date_dep" id="demo-date_dep" value=""
-											   min={{ today }} max={{ lastday }} placeholder="0000/00/00">
+											   min={{ today }} max={{ lastday }} placeholder="0000/00/00" onclick="change_date_dep()">
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_ret">Data Retorno</label>
 										 <script>
-											function log_console() {
+											function change_date_ret() {
+												let min_date = document.getElementById('demo-date_dep').value;
+												if (min_date == "") {
+													document.getElementById('demo-date_ret').disabled = true;
+													alert("Selecione uma data de partida");
+												}
+												else {
 												document.getElementById('demo-date_ret').min = document.getElementById('demo-date_dep').value;
+												document.getElementById('demo-date_ret').disabled = false;
 												console.log(document.getElementById('demo-date_dep').value);
+												}
 											}
 										</script>
-										<input type="date" name="demo-date_ret" id="demo-date_ret" value=""
-											   min="" max={{ lastday }} placeholder="0000/00/00" onclick="log_console()">
+											<input type="date" name="demo-date_ret" id="demo-date_ret" value=""
+											   min=""  max={{ lastday }} placeholder="0000/00/00" onclick="change_date_ret()">
 									</div>
 									<div class="field quarter">
 										<label for="demo-adults">Adultos</label>

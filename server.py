@@ -122,7 +122,7 @@ def receive_data():
     return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday)
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '192.168.0.105')
+    app.run(debug=True, host= '192.168.0.106')
     #app.run(debug=True)
 
 
