@@ -117,9 +117,7 @@ def receive_data():
 
     inserted = insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret)
 
-    #informar pagina que inseriu
-
-    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday)
+    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
 
 if __name__ == "__main__":
     app.run(debug=True, host= '192.168.0.106')

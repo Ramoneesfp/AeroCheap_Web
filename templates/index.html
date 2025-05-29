@@ -39,34 +39,38 @@
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
-
+						<div>
+							<span>
+								{{alert}}
+							</span>
+						</div>
 							<div class="span-4-5">
 							<h3 class="major">Form</h3>
 							<form action="/form-entry" method="post">
 								<div class="fields">
 									<div class="field third">
 										<label for="demo-name">Name</label>
-										<input type="text" name="demo-name" id="demo-name" value="Jane" placeholder="Jane">
+										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane" required>
 									</div>
 									<div class="field third">
 										<label for="demo-surname">Surname</label>
-										<input type="text" name="demo-surname" id="demo-surname" value="Doe" placeholder="Doe">
+										<input type="text" name="demo-surname" id="demo-surname" value="" placeholder="Doe" required>
 									</div>
 									<div class="field third">
 										<label for="demo-cpf">CPF</label>
-										<input type="number" name="demo-cpf" id="demo-cpf" value="" placeholder="000.000.000-00">
+										<input type="number" name="demo-cpf" id="demo-cpf" value="" placeholder="000.000.000-00" required>
 									</div>
 									<div class="field third">
 										<label for="demo-fone">Telefone</label>
-										<input type="number" name="demo-fone" id="demo-fone" value="" placeholder="(00)00000-0000">
+										<input type="number" name="demo-fone" id="demo-fone" value="" placeholder="(00)00000-0000" required>
 									</div>
 									<div class="field third">
 										<label for="demo-email">Email</label>
-										<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld">
+										<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" required>
 									</div>
 									<div class="field third">
 										<label for="demo-com">Meio de Comunicação</label>
-										<input type="radio" id="demo-com_whats" name="demo-com" class="color2" checked="">
+										<input type="radio" id="demo-com_whats" name="demo-com" class="color2" checked="" required>
 										<label for="demo-com_whats">WhatsApp</label>
 										<input type="radio" id="demo-com_email" name="demo-com" class="color2">
 										<label for="demo-com_email">Email</label>
@@ -74,7 +78,7 @@
 									<div class="field quarter">
 										<label for="demo-cod_dep">Origem</label>
 										<input name="demo-cod_dep" id="demo-cod_dep" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
-										aria-haspopup="false" aria-expanded="true">
+										aria-haspopup="false" aria-expanded="true" required>
 										<datalist id="mylist">
 											{% for i in range(airports['location']|length) %}
 											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
@@ -84,7 +88,7 @@
 									<div class="field quarter">
 										<label for="demo-cod_arr">Destino</label>
 										<input name="demo-cod_arr" id="demo-cod_arr" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
-										aria-haspopup="false" aria-expanded="true">
+										aria-haspopup="false" aria-expanded="true" required>
 										<datalist id="mylist">
 											{% for i in range(airports['location']|length) %}
 											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
@@ -95,7 +99,7 @@
 										<label for="demo-ticket_type">Tipo</label>
 										<div class="select-wrapper">
 											<select role="listbox" name="demo-ticket_type" id="demo-ticket_type"
-													aria-multiselectable="true">
+													aria-multiselectable="true" required>
 												{%for header in headings %}
 												<option value={{ header }}>{{ header }}</option>
 												{% endfor %}
@@ -110,8 +114,8 @@
 												document.getElementById('demo-date_ret').value = "";
 											}
 										</script>
-										<input type="date" name="demo-date_dep" id="demo-date_dep" value=""
-											   min={{ today }} max={{ lastday }} placeholder="0000/00/00" onclick="change_date_dep()">
+										<input type="date" name="demo-date_dep" id="demo-date_dep" value="" min={{ today }}
+											   max={{ lastday }} placeholder="0000/00/00" onclick="change_date_dep()" required>
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_ret">Data Retorno</label>
@@ -129,12 +133,12 @@
 												}
 											}
 										</script>
-											<input type="date" name="demo-date_ret" id="demo-date_ret" value=""
-											   min=""  max={{ lastday }} placeholder="0000/00/00" onclick="change_date_ret()">
+											<input type="date" name="demo-date_ret" id="demo-date_ret" value="" min=""
+											       max={{ lastday }} placeholder="0000/00/00" onclick="change_date_ret()" required>
 									</div>
 									<div class="field quarter">
 										<label for="demo-adults">Adultos</label>
-										<input type="number" name="demo-adults" id="demo-adults" value="1" placeholder="0">
+										<input type="number" name="demo-adults" id="demo-adults" value="" placeholder="0" required>
 									</div>
 									<div class="field quarter">
 										<input type="checkbox" id="demo-copy" name="demo-copy" class="color2">
