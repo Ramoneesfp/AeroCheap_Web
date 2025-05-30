@@ -18,7 +18,7 @@ from datetime import datetime
 
 #headings = ["Id", "cpf", "phone_number", "name", "surname", "email", "date_request", "obs"]
 airports = ["CWB", "GRU", "MAD"]
-headings = ["", "Com retorno", "Só ida"]
+list_ticket_type = ["Com retorno", "Só ida - Só volta"]
 
 client = MongoClient("mongodb://localhost:27017")
 collection_id = client["budget"]["airports"]
@@ -51,7 +51,7 @@ lastday = today.replace(year=today.year + 1)
 today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
 
-def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret):
+def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs):
     client = MongoClient("mongodb://localhost:27017")
     collection_id = client["budget"]["id_budget"]
     collection_info = client["budget"]["info_budget"]
@@ -63,7 +63,7 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
         "phone_number": fone,
         "email": email,
         "date_request": datetime.now(),
-        "obs": "TESTE_WEB"
+        "obs": obs
     }
     result = collection_id.insert_one(aggregate_id)
     #print(f"Inserted document ID: {result.inserted_id}")
@@ -72,7 +72,7 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
         "cod_dep": cod_dep,
         "cod_arr": cod_arr,
         "ticket_type": ticket_type,
-        "adults": adults,
+        "adults": int(adults),
         "children": 0,
         "infants_in_seat": 0,
         "infants_on_lap": 0,
@@ -83,7 +83,7 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
         "state": "INITIAL",
         "number_budgets": 5,
         "id_budget": ObjectId(result.inserted_id),
-        "obs": ""
+        "obs": obs
     }
 
     result_info = collection_info.insert_one(aggregate_info)
@@ -95,7 +95,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday)
+    return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday)
 
 # SOLUTION to Challenge:
 @app.route("/form-entry", methods=["POST"])
@@ -113,14 +113,15 @@ def receive_data():
     adults = request.form["demo-adults"]
     date_dep = request.form["demo-date_dep"]
     date_ret = request.form["demo-date_ret"]
+    obs = request.form["demo-message"]
     #print(f'cod:{cod_dep}-{cod_arr} ticket: {ticket_type} adults: {adults} and date_dep:{date_dep}-{date_ret}')
 
-    inserted = insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret)
+    inserted = insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs)
 
-    return render_template("index.html", headings=headings, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
+    return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '192.168.0.106')
+    app.run(debug=True, host= '192.168.0.105')
     #app.run(debug=True)
 
 

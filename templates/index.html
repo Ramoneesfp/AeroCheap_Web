@@ -13,11 +13,24 @@
 		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
     	<script src= "https://code.jquery.com/jquery-3.6.0.min.js"> </script>
+		<!-- Pikaday Library -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+		<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 	</head>
 	<body class="is-preload">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
+				<script>
+					var isIOS = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+					var ua = window.navigator.userAgent;
+					var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+					var webkit = !!ua.match(/WebKit/i);
+					var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+					if (iOSSafari) {
+						alert("IOS");
+					}
+				</script>
 
 				<!-- Header -->
 					<header id="header">
@@ -100,8 +113,8 @@
 										<div class="select-wrapper">
 											<select role="listbox" name="demo-ticket_type" id="demo-ticket_type"
 													aria-multiselectable="true" required>
-												{%for header in headings %}
-												<option value={{ header }}>{{ header }}</option>
+												{%for type in list_ticket_type %}
+												<option value={{ type }}>{{ type }}</option>
 												{% endfor %}
 											</select>
 										</div>
@@ -114,13 +127,14 @@
 												document.getElementById('demo-date_ret').value = "";
 											}
 										</script>
-										<input type="date" name="demo-date_dep" id="demo-date_dep" value="" min={{ today }}
-											   max={{ lastday }} placeholder="0000/00/00" onclick="change_date_dep()" required>
+										<input type="date" name="demo-date_dep" id="demo-date_dep" value="" min={{ today }} minimumDate={{ today }}
+											   max={{ lastday }} placeholder="DD/MM/YYYY" onclick="change_date_dep()" required>
 									</div>
 									<div class="field quarter">
 										<label for="demo-date_ret">Data Retorno</label>
 										 <script>
 											function change_date_ret() {
+												let ticket_type = document.getElementById('demo-ticket_type').value;
 												let min_date = document.getElementById('demo-date_dep').value;
 												if (min_date == "") {
 													document.getElementById('demo-date_ret').disabled = true;
@@ -134,7 +148,7 @@
 											}
 										</script>
 											<input type="date" name="demo-date_ret" id="demo-date_ret" value="" min=""
-											       max={{ lastday }} placeholder="0000/00/00" onclick="change_date_ret()" required>
+											       max={{ lastday }} placeholder="DD/MM/YYYY" onclick="change_date_ret()" required>
 									</div>
 									<div class="field quarter">
 										<label for="demo-adults">Adultos</label>
