@@ -113,7 +113,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    airport_search = get_airport("")
+    #airport_search = get_airport("")
+    airport_search = ["CWB", "GRU", "MAD"]
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday)
 
 # SOLUTION to Challenge:
