@@ -77,6 +77,15 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
     result = collection_id.insert_one(aggregate_id)
     #print(f"Inserted document ID: {result.inserted_id}")
 
+    list_ticket_type = ["Com", "Só"]
+    ticket_type = list_ticket_type.index(ticket_type)+1
+    #print(f"index ticket_type: {ticket_type}")
+
+    if ticket_type == 2:
+        number_budgets = 5
+    else:
+        number_budgets = 10
+
     aggregate_info = {
         "cod_dep": cod_dep,
         "cod_arr": cod_arr,
@@ -90,7 +99,7 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
         "date_ret": date_ret,
         "price_searched": 500,
         "state": "INITIAL",
-        "number_budgets": 5,
+        "number_budgets": number_budgets,
         "id_budget": ObjectId(result.inserted_id),
         "obs": obs
     }
