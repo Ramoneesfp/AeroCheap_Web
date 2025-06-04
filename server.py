@@ -146,7 +146,7 @@ def receive_data():
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
 
 if __name__ == "__main__":
-    app.run(debug=True, host= '192.168.0.105')
-    #app.run(debug=True)
+    #app.run(debug=True, host= '192.168.0.105')
+    app.run(debug=True)
 
 
