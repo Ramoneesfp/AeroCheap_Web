@@ -1,9 +1,13 @@
 # from fastapi import FastAPI
 from flask import Flask, render_template,request
-#from pymongo import MongoClient
-#from bson import ObjectId
+from pymongo import MongoClient
+from bson import ObjectId
 from datetime import datetime
-
+#python -m pip install "pymongo[srv]"==3.12
+#60.50.13.209
+#ramoneesfp
+#99zWyq8YuA6aPDPO
+#mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE
 #91189e08c8723fede58866e0f6108ffe8ea26a8508d86b1c9b4a2fcbb3bd25a8e5d6218b790081ffde0d2fd2cc2286a4 # API
 
 # app = FastAPI()
@@ -26,7 +30,7 @@ today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
 
 def get_airport(cod):
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
     collection_id = client["budget"]["airports"]
     col_id = collection_id.find({})
     #col_id = list(col_id)
@@ -61,7 +65,7 @@ def get_airport(cod):
         return codes
 
 def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs):
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
     collection_id = client["budget"]["id_budget"]
     collection_info = client["budget"]["info_budget"]
 
@@ -113,8 +117,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    #airport_search = get_airport("")
-    airport_search = ["CWB", "GRU", "MAD"]
+    airport_search = get_airport("")
+    #airport_search = ["CWB", "GRU", "MAD"]
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday)
 
 # SOLUTION to Challenge:
