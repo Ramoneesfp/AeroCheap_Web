@@ -17,39 +17,48 @@ from datetime import datetime
 #     return {"message": f"Hello {name}"}
 
 #headings = ["Id", "cpf", "phone_number", "name", "surname", "email", "date_request", "obs"]
-airports = ["CWB", "GRU", "MAD"]
+#airports = ["CWB", "GRU", "MAD"]
 list_ticket_type = ["Com retorno", "Só ida - Só volta"]
-
-client = MongoClient("mongodb://localhost:27017")
-collection_id = client["budget"]["airports"]
-col_id = collection_id.find({})
-#col_id = list(col_id)
-location = ""
-airport = ""
-iata_code = ""
-for i in col_id:
-    aux = i["location"]
-    location += aux
-    aux = i["airport"]
-    airport += aux
-    aux = i["iata_code"]
-    iata_code += aux
-location = location.split(";")
-airport = airport.split(";")
-iata_code = iata_code.split(";")
-# print(f'{len(location)} - {location}')
-# print(f'{len(airport)} - {airport}')
-# print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
-airport_search = {
-    "location": location,
-    "airport": airport,
-    "iata_code": iata_code
-}
 
 today = datetime.today()
 lastday = today.replace(year=today.year + 1)
 today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
+
+def get_airport(cod):
+    client = MongoClient("mongodb://localhost:27017")
+    collection_id = client["budget"]["airports"]
+    col_id = collection_id.find({})
+    #col_id = list(col_id)
+    location = ""
+    airport = ""
+    iata_code = ""
+    for i in col_id:
+        aux = i["location"]
+        location += aux
+        aux = i["airport"]
+        airport += aux
+        aux = i["iata_code"]
+        iata_code += aux
+    location = location.split(";")
+    airport = airport.split(";")
+    iata_code = iata_code.split(";")
+    # print(f'{len(location)} - {location}')
+    # print(f'{len(airport)} - {airport}')
+    # print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
+    client.close()
+    if cod == "":
+        airport_search = {
+            "location": location,
+            "airport": airport,
+            "iata_code": iata_code
+        }
+        return airport_search
+    else:
+        codes = []
+        for c in cod:
+            codes.append(iata_code[location.index(c)])
+        return codes
 
 def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs):
     client = MongoClient("mongodb://localhost:27017")
@@ -95,6 +104,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    airport_search = get_airport("")
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday)
 
 # SOLUTION to Challenge:
@@ -107,8 +117,8 @@ def receive_data():
     email = request.form["demo-email"]
     #print(f'name:{name}/{surname} - {cpf} - {fone} and email:{email}')
 
-    cod_dep = request.form["demo-cod_dep"]
-    cod_arr = request.form["demo-cod_arr"]
+    dep = request.form["demo-cod_dep"]
+    arr = request.form["demo-cod_arr"]
     ticket_type = request.form["demo-ticket_type"]
     adults = request.form["demo-adults"]
     date_dep = request.form["demo-date_dep"]
@@ -116,8 +126,14 @@ def receive_data():
     obs = request.form["demo-message"]
     #print(f'cod:{cod_dep}-{cod_arr} ticket: {ticket_type} adults: {adults} and date_dep:{date_dep}-{date_ret}')
 
+    cods = []
+    cods = get_airport([dep, arr])
+    cod_dep = cods[0]
+    cod_arr = cods[1]
+
     inserted = insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs)
 
+    airport_search = get_airport("")
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
 
 if __name__ == "__main__":
