@@ -94,7 +94,7 @@
 										aria-haspopup="false" aria-expanded="true" required>
 										<datalist id="mylist">
 											{% for i in range(airports['location']|length) %}
-											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
+											<option value= {{ airports['iata_code'][i] }}> {{ airports['location'][i] }} - {{ airports['airport'][i] }} - {{ airports['iata_code'][i] }}</option>
 											{% endfor %}
 										</datalist>
 									</div>
@@ -102,10 +102,7 @@
 										<label for="demo-cod_arr">Destino</label>
 										<input name="demo-cod_arr" id="demo-cod_arr" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
 										aria-haspopup="false" aria-expanded="true" required>
-										<datalist id="mylist">
-											{% for i in range(airports['location']|length) %}
-											<option value={{airports['location'][i]}}>{{airports['airport'][i]}}</option>
-											{% endfor %}
+										<datalist id="mylist1">
 										</datalist>
 									</div>
 									<div class="field quarter">
@@ -173,6 +170,12 @@
 								</ul>
 							</form>
 						</div>
+						<ul>
+							<li>{{ airports['location']|length }}</li>
+							{% for i in range(airports['location']|length) %}
+							<li> {{ airports['location'][i] }}</li>
+							{% endfor %}
+						</ul>
 
 					</header>
 

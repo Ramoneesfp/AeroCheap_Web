@@ -89,10 +89,10 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
     ticket_type = list_ticket_type.index(ticket_type)+1
     #print(f"index ticket_type: {ticket_type}")
 
-    if ticket_type == 2:
-        number_budgets = 5
-    else:
-        number_budgets = 10
+    #if ticket_type == 2:
+    #    number_budgets = 5
+    #else:
+    number_budgets = 5
 
     aggregate_info = {
         "cod_dep": cod_dep,
@@ -122,6 +122,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     airport_search = get_airport("")
+    #print(airport_search)
     #airport_search = ["CWB", "GRU", "MAD"]
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday)
 
@@ -144,12 +145,12 @@ def receive_data():
     obs = request.form["demo-message"]
     #print(f'cod:{cod_dep}-{cod_arr} ticket: {ticket_type} adults: {adults} and date_dep:{date_dep}-{date_ret}')
 
-    cods = []
-    cods = get_airport([dep, arr])
-    cod_dep = cods[0]
-    cod_arr = cods[1]
+    # cods = []
+    # cods = get_airport([dep, arr])
+    # cod_dep = cods[0]
+    # cod_arr = cods[1]
 
-    inserted = insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs)
+    inserted = insert_id_info(name, surname, cpf, fone, email, dep, arr, ticket_type, adults, date_dep, date_ret, obs)
 
     airport_search = get_airport("")
     return render_template("index.html", list_ticket_type=list_ticket_type, airports=airport_search, today=today, lastday=lastday, alert=f"Orçamento {inserted}\nInserido com sucesso!")
