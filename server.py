@@ -31,8 +31,9 @@ today = datetime.today()
 lastday = today.replace(year=today.year + 1)
 today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
-client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
-client = pymongo.MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE", tlsCAFile=ca)
+#client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
+client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE", tlsCAFile=ca)
+
 def get_airport(cod):
     collection_id = client["budget"]["airports"]
     col_id = collection_id.find({})
