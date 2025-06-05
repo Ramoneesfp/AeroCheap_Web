@@ -3,6 +3,8 @@ from flask import Flask, render_template,request
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
+import certifi
+ca = certifi.where()
 
 #python -m pip install "pymongo[srv]"==3.12
 #60.50.13.209
@@ -30,7 +32,7 @@ lastday = today.replace(year=today.year + 1)
 today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
 client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
-
+client = pymongo.MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE", tlsCAFile=ca)
 def get_airport(cod):
     collection_id = client["budget"]["airports"]
     col_id = collection_id.find({})
