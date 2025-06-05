@@ -3,7 +3,7 @@ from flask import Flask, render_template,request
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
-return 1
+
 #python -m pip install "pymongo[srv]"==3.12
 #60.50.13.209
 #ramoneesfp
@@ -29,9 +29,9 @@ today = datetime.today()
 lastday = today.replace(year=today.year + 1)
 today = today.strftime("%Y-%m-%d")
 lastday = lastday.strftime("%Y-%m-%d")
+client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
 
 def get_airport(cod):
-    client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
     collection_id = client["budget"]["airports"]
     col_id = collection_id.find({})
     #col_id = list(col_id)
@@ -51,7 +51,7 @@ def get_airport(cod):
     # print(f'{len(location)} - {location}')
     # print(f'{len(airport)} - {airport}')
     # print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
-    client.close()
+    #client.close()
     if cod == "":
         airport_search = {
             "location": location,
@@ -66,7 +66,7 @@ def get_airport(cod):
         return codes
 
 def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_type, adults, date_dep, date_ret, obs):
-    client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
+    #client = MongoClient("mongodb+srv://ramoneesfp:99zWyq8YuA6aPDPO@aerocheapteste.0myx5m8.mongodb.net/?retryWrites=true&w=majority&appName=AeroCheapTESTE")
     collection_id = client["budget"]["id_budget"]
     collection_info = client["budget"]["info_budget"]
 
@@ -111,7 +111,7 @@ def insert_id_info(name, surname, cpf, fone, email, cod_dep, cod_arr, ticket_typ
 
     result_info = collection_info.insert_one(aggregate_info)
     #print(f"Inserted document INFO: {result_info.inserted_id}")
-    client.close()
+    #client.close()
     return result.inserted_id
 
 app = Flask(__name__)
