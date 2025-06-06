@@ -94,7 +94,7 @@
 										aria-haspopup="false" aria-expanded="true" required>
 										<datalist id="mylist">
 											{% for i in range(airports['location']|length) %}
-											<option value= {{ airports['iata_code'][i] }}> {{ airports['location'][i] }} - {{ airports['airport'][i] }} - {{ airports['iata_code'][i] }}</option>
+											<option value= {{ airports['iata_code'][i] }}> {{ airports['location'][i] }} ({{ airports['pais'][i] }}) - {{ airports['airport'][i] }} - {{ airports['iata_code'][i] }}</option>
 											{% endfor %}
 										</datalist>
 									</div>

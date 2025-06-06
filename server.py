@@ -41,6 +41,7 @@ def get_airport(cod):
     location = ""
     airport = ""
     iata_code = ""
+    pais = ""
     for i in col_id:
         aux = i["location"]
         location += aux
@@ -48,9 +49,12 @@ def get_airport(cod):
         airport += aux
         aux = i["iata_code"]
         iata_code += aux
+        aux = i["pais"]
+        pais += aux
     location = location.split(";")
     airport = airport.split(";")
     iata_code = iata_code.split(";")
+    pais = pais.split(";")
     # print(f'{len(location)} - {location}')
     # print(f'{len(airport)} - {airport}')
     # print(f'{len(iata_code)} {type(iata_code[1002])} - {iata_code}')
@@ -59,7 +63,8 @@ def get_airport(cod):
         airport_search = {
             "location": location,
             "airport": airport,
-            "iata_code": iata_code
+            "iata_code": iata_code,
+            "pais": pais
         }
         return airport_search
     else:
