@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
 import certifi
-from backend import setupdata
+import setupdata
 
 ca = certifi.where()
 import re
