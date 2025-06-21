@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>AeroCheap</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+    	<script src= "https://code.jquery.com/jquery-3.6.0.min.js"> </script>
+		<link rel="stylesheet" href="datepicker.material.css">
+  		<script src="datepicker.js"></script>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<script>
+					var isIOS = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+					var ua = window.navigator.userAgent;
+					var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+					var webkit = !!ua.match(/WebKit/i);
+					var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+					if (iOSSafari) {
+						//alert("IOS");
+					}
+				</script>
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+							<span class="fa fa-plane"></span>
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1>AEROCHEAP</h1>
+								<p>Não é apenas viajar, é sobre conquistar o mundo</p>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#intro">Intro</a></li>
+								<li><a href="#work">Work</a></li>
+								<li><a href="#about">About</a></li>
+								<li><a href="#contact">Contact</a></li>
+								<!--<li><a href="#elements">Elements</a></li>-->
+							</ul>
+						</nav>
+						<div>
+							<span>
+								{{alert}}
+							</span>
+						</div>
+							<div class="span-4-5">
+							<h3 class="major">Form</h3>
+							<form action="/form-entry" method="post">
+
+								<div class="fields">
+									<div class="field third">
+										<label for="demo-name">Nome</label>
+										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane"
+											   title="Digite o nome" required>
+									</div>
+									<div class="field third">
+										<label for="demo-surname">Sobrenome</label>
+										<input type="text" name="demo-surname" id="demo-surname" value="" placeholder="Doe"
+											   title="Digite o sobrenome" required>
+									</div>
+									<div class="field third">
+										<label for="demo-cpf">CPF (Apenas números)</label>
+										<input type="number" name="demo-cpf" id="demo-cpf" value="" placeholder="000.000.000-00"
+											   title="Digite o CPF apenas com números" max="99999999999" inputmode="decimal" required>
+									</div>
+									<div class="field third">
+										<label for="demo-fone">Telefone (Apenas números)</label>
+										<div class="input-fone">
+											<input type="number" name="demo-fone" id="demo-fone" value="" placeholder="(00)00000-0000"
+												   title="Digite o telefone apenas com números" max="99999999999" inputmode="decimal" required>
+											<div class="dropdown-ddd">
+												<select role="listbox" name="demo-ddd" id="demo-ddd"
+														value="" title="Selecione o prefixo do país" required>
+													{%for ddd in list_DDD %}
+													<option name="select-ddd" value={{ ddd }}>{{ ddd }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field third">
+										<label for="demo-email">Email</label>
+										<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld"
+											   title="Digite o e-mail" required>
+									</div>
+									<div class="field third">
+										<label for="demo-com">Meio de Comunicação</label>
+										<input type="radio" id="demo-com_whats" name="demo-com" class="color2" checked="" required>
+										<label for="demo-com_whats">WhatsApp</label>
+										<input type="radio" id="demo-com_email" name="demo-com" class="color2">
+										<label for="demo-com_email">Email</label>
+									</div>
+									<div class="field quarter">
+										<label for="demo-ticket_type">Tipo do bilhete</label>
+										<script>
+											function hide_date() {
+											let ticket_type = document.getElementById('demo-ticket_type').value;
+											let date_dep = document.getElementById('demo-date_dep').value;
+											console.log(ticket_type);
+												if(ticket_type == 'Só') {
+													document.getElementById('date_ret').style.display = 'none';
+													document.getElementById('demo-date_ret').required = false;
+													document.getElementById('demo-date_ret').value = "";
+												}
+												else {
+													document.getElementById('date_ret').style.display = '';
+													document.getElementById('demo-date_ret').required = true;
+													document.getElementById('demo-date_ret').value = "";
+												}
+											}
+										</script>
+										<div class="select-wrapper">
+											<select role="listbox" name="demo-ticket_type" id="demo-ticket_type" onchange="hide_date()"
+													aria-multiselectable="true" value="" title="Selecione o tipo da passagem" required>
+												{%for type in list_ticket_type %}
+												<option name="select-ticket_type" value={{ type }}>{{ type }}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="field quarter">
+										<label for="demo-cod_dep">Origem</label>
+										<input name="demo-cod_dep" id="demo-cod_dep" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
+										aria-haspopup="false" aria-expanded="true" title="Selecione o aeroporto de origem com 3 dígitos" pattern="[A-Z]{3}" required>
+										<datalist id="mylist">
+											{% for i in range(airports['location']|length) %}
+											<option value= {{ airports['iata_code'][i] }} > {{ airports['location'][i] }} ({{ airports['pais'][i] }}) - {{ airports['airport'][i] }} - {{ airports['iata_code'][i] }}</option>
+											{% endfor %}
+										</datalist>
+										<a href="https://en.wikipedia.org/wiki/List_of_international_airports_by_country" target="_blank" rel="noopener noreferrer" >Lista de todos aeroportos</a>
+									</div>
+									<div class="field quarter">
+										<label for="demo-cod_arr">Destino</label>
+										<input name="demo-cod_arr" id="demo-cod_arr" type="text" list="mylist" autocomplete="off" role="combobox" aria-autocomplete="inline"
+										aria-haspopup="false" aria-expanded="true" title="Selecione o aeroporto de destino com 3 dígitos" pattern="[A-Z]{3}" required>
+										<datalist id="mylist1">
+										</datalist>
+									</div>
+									<div class="field quarter">
+										<label for="demo-date_dep">Data Partida</label>
+										<script>
+											function change_date_dep() {
+												document.getElementById('demo-date_ret').disabled = false;
+												document.getElementById('demo-date_ret').value = "";
+											}
+										</script>
+										<input type="date" name="demo-date_dep" id="demo-date_dep" value="" min={{ today }} minimumDate={{ today }}
+											   max={{ lastday }} placeholder="DD/MM/YYYY" onclick="change_date_dep()" title="Selecione a data de partida" required>
+									</div>
+									<div id="date_ret" class="field quarter">
+										<label for="demo-date_ret">Data Retorno</label>
+										 <script>
+											function change_date_ret() {
+												let ticket_type = document.getElementById('demo-ticket_type').value;
+												let min_date = document.getElementById('demo-date_dep').value;
+												if (min_date == "") {
+													document.getElementById('demo-date_ret').disabled = true;
+													alert("Selecione uma data de partida");
+												}
+												else {
+												document.getElementById('demo-date_ret').min = document.getElementById('demo-date_dep').value;
+												document.getElementById('demo-date_ret').disabled = false;
+												console.log(document.getElementById('demo-date_dep').value);
+												}
+											}
+										</script>
+											<input type="date" id="demo-date_ret" name="demo-date_ret" value="" min=""
+											       max={{ lastday }} placeholder="DD/MM/YYYY" onclick="change_date_ret()" title="Selecione a data de retorno" required>
+									</div>
+									<div id="demo-people" class="field quarter">
+										<label for="demo-people" >Pessoas</label>
+										<script>
+											function show_people() {
+											let people = document.getElementById('button-people').value;
+											//console.log(people);
+												if(people == 'false') {
+													document.getElementById('demo-adult').style.display = '';
+													document.getElementById('demo-child').style.display = '';
+													document.getElementById('demo-seat').style.display = '';
+													document.getElementById('demo-lap').style.display = '';
+													document.getElementById('demo-people').style.display = 'none';
+													//document.getElementById('demo-people').value = "true";
+												}
+												else {
+													document.getElementById('demo-adult').style.display = 'none';
+													document.getElementById('demo-child').style.display = 'none';
+													document.getElementById('demo-seat').style.display = 'none';
+													document.getElementById('demo-lap').style.display = 'none';
+													document.getElementById('demo-people').value = "false";
+												}
+											}
+										</script>
+										<button type="button" name="button-people" id="button-people" class="btn-adult" value="false" title="Adicione mais pessoas"
+												onclick="show_people()"><i class="fas fa-user-alt"></i> 1 Adulto <i class="fa fa-caret-down"></i></button>
+									</div>
+									<div id="demo-adult" class="field quarter" style="display: none;">
+										<label for="demo-adults">Adultos</label>
+										<input type="number" name="demo-adults" id="demo-adults" value="1" placeholder="0" min="1"
+											   inputmode="decimal" title="Selecione quantos adultos" required>
+									</div>
+									<div id="demo-child" class="field quarter" style="display: none;">
+										<label for="demo-children">Crianças de 2 a 11 anos</label>
+										<input type="number" name="demo-children" id="demo-children" value="0" placeholder="0" min="0"
+											   inputmode="decimal" title="Selecione quantas crianças" required>
+									</div>
+									<div id="demo-seat" class="field quarter" style="display: none;">
+										<label for="demo-seats">Crianças de 0 a 2 anos no assento</label>
+										<input type="number" name="demo-seats" id="demo-seats" value="0" placeholder="0" min="0"
+											   inputmode="decimal" title="Selecione quantas crianças no assento" required>
+									</div>
+									<div id="demo-lap" class="field quarter" style="display: none;">
+										<label for="demo-laps">Crianças de colo</label>
+										<input type="number" name="demo-laps" id="demo-laps" value="0" placeholder="0" min="0"
+											   inputmode="decimal" title="Selecione quantas crianças no colo" required>
+									</div>
+									<div class="field quarter">
+										<label for="demo-price">Preço já encontrado</label>
+										<input type="number" name="demo-price" id="demo-price" value="" placeholder="R$ 000"
+											   title="Valores em reais" min="0" inputmode="decimal" >
+									</div>
+									<div class="field">
+										<label for="demo-message">Observação</label>
+										<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="2" title="Escreva uma observação"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="ENVIAR" class="primary color2" title="Criar orcamento" onclick="test_submit()" ></li>
+									<li><input type="reset" value="Reset" title="APAGAR TODAS INFORMAÇÕES"></li>
+								</ul>
+							</form>
+						</div>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Intro -->
+							<article id="intro">
+								<h2 class="major">Intro</h2>
+								<span class="image main"><img src="static/images/pic1.jpg" alt="" /></span>
+								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+							</article>
+
+						<!-- Work -->
+							<article id="work">
+								<h2 class="major">Work</h2>
+								<span class="image main"><img src="static/images/pic02.jpg" alt="" /></span>
+								<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
+								<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
+							</article>
+
+						<!-- About -->
+							<article id="about">
+								<h2 class="major">About</h2>
+								<span class="image main"><img src="static/images/pic1.jpg" alt="" /></span>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+							</article>
+
+						<!-- Contact -->
+							<article id="contact">
+								<h2 class="major">Contact</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<label for="name">Name</label>
+											<input type="text" name="name" id="name" />
+										</div>
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="text" name="email" id="email" />
+										</div>
+										<div class="field">
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="4"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+								<ul class="icons">
+									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</article>
+
+						<!-- Elements -->
+							<article id="elements">
+								<h2 class="major">Elements</h2>
+
+								<section>
+									<h3 class="major">Text</h3>
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
+									<hr />
+									<h2>Heading Level 2</h2>
+									<h3>Heading Level 3</h3>
+									<h4>Heading Level 4</h4>
+									<h5>Heading Level 5</h5>
+									<h6>Heading Level 6</h6>
+									<hr />
+									<h4>Blockquote</h4>
+									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
+									<h4>Preformatted</h4>
+									<pre><code>i = 0;
+
+while (!deck.isInOrder()) {
+    print 'Iteration ' + i;
+    deck.shuffle();
+    i++;
+}
+
+print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+								</section>
+
+								<section>
+									<h3 class="major">Lists</h3>
+
+									<h4>Unordered</h4>
+									<ul>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Alternate</h4>
+									<ul class="alt">
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Ordered</h4>
+									<ol>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis viverra.</li>
+										<li>Felis enim feugiat.</li>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis lorem.</li>
+										<li>Felis enim et feugiat.</li>
+									</ol>
+									<h4>Icons</h4>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+									</ul>
+
+									<h4>Actions</h4>
+									<ul class="actions">
+										<li><a href="#" class="button primary">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions stacked">
+										<li><a href="#" class="button primary">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Table</h3>
+									<h4>Default</h4>
+									<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+
+									<h4>Alternate</h4>
+									<div class="table-wrapper">
+										<table class="alt">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</section>
+
+								<section>
+									<h3 class="major">Buttons</h3>
+									<ul class="actions">
+										<li><a href="#" class="button primary">Primary</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button">Default</a></li>
+										<li><a href="#" class="button small">Small</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
+										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
+									</ul>
+									<ul class="actions">
+										<li><span class="button primary disabled">Disabled</span></li>
+										<li><span class="button disabled">Disabled</span></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Form</h3>
+									<form method="post" action="#">
+										<div class="fields">
+											<div class="field half">
+												<label for="demo-name">Name</label>
+												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
+											</div>
+											<div class="field half">
+												<label for="demo-email">Email</label>
+												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
+											</div>
+											<div class="field">
+												<label for="demo-category">Category</label>
+												<select name="demo-category" id="demo-category">
+													<option value="">-</option>
+													<option value="1">Manufacturing</option>
+													<option value="1">Shipping</option>
+													<option value="1">Administration</option>
+													<option value="1">Human Resources</option>
+												</select>
+											</div>
+											<div class="field half">
+												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
+												<label for="demo-priority-low">Low</label>
+											</div>
+											<div class="field half">
+												<input type="radio" id="demo-priority-high" name="demo-priority">
+												<label for="demo-priority-high">High</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="demo-copy" name="demo-copy">
+												<label for="demo-copy">Email me a copy</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="demo-human" name="demo-human" checked>
+												<label for="demo-human">Not a robot</label>
+											</div>
+											<div class="field">
+												<label for="demo-message">Message</label>
+												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+											</div>
+										</div>
+										<ul class="actions">
+											<li><input type="submit" value="Send Message" class="primary" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+									</form>
+								</section>
+
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
+
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>

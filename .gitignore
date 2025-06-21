@@ -1,0 +1,3 @@
+backend/setupdata.py
+.env
+!requirements.txt
